@@ -1,18 +1,23 @@
 // ==UserScript==
-// @icon            https://www.google.com/s2/favicons?domain=qztc.class.gaoxiaobang.com
+// @icon            https://www.google.com/s2/favicons?domain=gaoxiaobang.com/
 // @name            高校邦一键看完当前视频
-// @namespace       http://tampermonkey.net/
+// @namespace       https://github.com/GitACzero/Greasy-Fork/tree/master/%E9%AB%98%E6%A0%A1%E9%82%A6
 // @author          Zero
-// @description     一键修改进度到100%
+// @description     练习脚本，一键修改进度到100%
 // @match            *://u.class.gaoxiaobang.com/*
 // @require         http://cdn.bootcss.com/jquery/1.8.3/jquery.min.js
-// @version         0.0.1
+// @version         2.1
 // @grant           GM_addStyle
 // ==/UserScript==
 /*global $: true, jQuery: false */ //定义全局变量
 (function () {
     'use strict';
     init();
+
+    setTimeout(function() {
+        autoClick();
+    }, 6000);
+
 })();
 
 function init() {
@@ -21,7 +26,7 @@ function init() {
 
     //视频t跳过按钮的html代码
     var skip_btn_html = document.createElement("a");
-    skip_btn_html += '<a href="javascript:void(0);" class="btn" id="skip_video">';
+    skip_btn_html += '<a href="javascript:void(0);" class="btn" id="skip_video" onclick="alert("点我");>';
     skip_btn_html += '一键跳过';
     skip_btn_html += '</a>';
 
@@ -30,10 +35,23 @@ function init() {
     if (ul_tag) {
         ul_tag.append(skip_btn_html);
     }
-    $("#skip_video").click(function () {
-        f_exec();
-    });
+/*
+     $("#skip_video").click(function () {
+          f_exec();
+     });
+*/
+ 
 }
+
+function autoClick(){
+    var A = document.getElementById("skip_video");
+    A.onclick = function () {
+          f_exec();
+     }
+     A.onclick();
+}
+
+var interval=setInterval(autoClick,10000);
 
 function f_exec() {
     var video = document.querySelector('video'); //如果没有获取到video，则提示
